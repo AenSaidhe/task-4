@@ -1,0 +1,7 @@
+
+.fieldLayout {
+  display: grid;
+  grid-template-columns: 25px 25px 25px;
+  grid-template-rows: 25px 25px 25px;
+  grid-gap: 0.35em;
+}
