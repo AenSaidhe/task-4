@@ -1,14 +1,15 @@
-
-
-export default function Title ({ currentPlayer, reset, winner, isGameEnded }) {
-
+export default function Title ({ currentPlayer, reset, winner }) {
+    console.log(winner)
     return (
-        <h2>
+        <div>
             Сейчас ход {currentPlayer}
-            {
-                winner && <p>Победитель: {winner}</p>
-            }
+            <p>
+                {
+                    winner && <>Победитель: {winner}</>
+                }
+            </p>
+
             <button onClick={reset}>Начать заново</button>
-        </h2>
+        </div>
     )
 }

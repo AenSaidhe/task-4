@@ -9,31 +9,27 @@ const WIN_PATTERNS = [
     [0, 4, 8], [2, 4, 6] // Варианты побед по диагонали
 ];
 
+const calculateWinner = (squares) => {
+    for (let i = 0; i < WIN_PATTERNS.length; i++) {
+        const [a,b,c] = WIN_PATTERNS[i]
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a]
+        }
+    }
+    return null
+}
+
 function App() {
     const [currentPlayer, setCurrentPlayer] = useState('X');
     const [fields, setFields] = useState(Array(9).fill(''));
-    const [isGameEnded, setIsGameEnded] = useState(false);
-    const [isDraw, setIsDraw] = useState(false);
     const [winner, setWinner] = useState(null);
-
-    const calculateWinner = (squares) => {
-        for (let i = 0; i < WIN_PATTERNS.length; i++) {
-            const [a,b,c] = WIN_PATTERNS[i]
-            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                setWinner(squares[a])
-            }
-        }
-        return null
-    }
+    //const winner = calculateWinner(fields)
 
     const handleClick = (index) => {
         if (fields[index] || winner) {
             return
         }
-        if (winner) {
-            setIsGameEnded(true)
-            setIsDraw(true)
-        }
+
         if (currentPlayer === 'X') {
             fields[index] = 'X'
             setCurrentPlayer('O')
@@ -41,21 +37,18 @@ function App() {
             fields[index] = 'O'
             setCurrentPlayer('X')
         }
-
-        calculateWinner(fields)
+        setWinner(calculateWinner(fields))
     }
 
     const reset = () => {
         setCurrentPlayer('X')
         setFields(Array(9).fill(''))
-        setIsGameEnded(false)
-        setIsDraw(false)
         setWinner(null)
     }
 
     return (
         <main>
-            <Title currentPlayer={currentPlayer} winner={winner} isGameEnded={isGameEnded} reset={reset} />
+            <Title currentPlayer={currentPlayer} winner={winner} reset={reset} />
             <FieldLayout currentPlayer={currentPlayer}
                          setCurrentPlayer={setCurrentPlayer}
                          handleClick={handleClick}
